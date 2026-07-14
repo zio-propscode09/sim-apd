@@ -67,7 +67,7 @@ const login = async (req, res) => {
 
   } catch (error) {
     console.error(error);
-    return jsonError(res, 'Terjadi kesalahan pada server saat login.', 500);
+    return res.status(500).json({ success: false, message: 'Terjadi kesalahan pada server saat login.', error: error.message, stack: error.stack });
   }
 };
 
