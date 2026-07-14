@@ -100,18 +100,20 @@ export default function AjukanPeminjaman() {
           <div className="alert alert-info">
             Centang APD yang sudah Anda coba bersama HC Staff, lalu pilih ukuran yang pas.
           </div>
-          {apdList.map((jenis) => {
-            const checked = jenis.id in selected;
-            return (
-              <div className="card" key={jenis.id}>
-                <label className="checkbox-row" style={{ marginBottom: checked ? 12 : 0 }}>
-                  <input
-                    type="checkbox"
-                    checked={checked}
-                    onChange={(e) => toggleJenis(jenis.id, e.target.checked)}
-                  />
-                  <strong>{jenis.nama_apd}</strong>
-                </label>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+            {apdList.map((jenis) => {
+              const checked = jenis.id in selected;
+              return (
+                <div className="card" key={jenis.id}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', marginBottom: checked ? 12 : 0 }}>
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      style={{ width: 18, height: 18, margin: 0 }}
+                      onChange={(e) => toggleJenis(jenis.id, e.target.checked)}
+                    />
+                    <strong>{jenis.nama_apd}</strong>
+                  </label>
 
                 {checked && (
                   <div className="field" style={{ marginBottom: 0 }}>
@@ -133,8 +135,9 @@ export default function AjukanPeminjaman() {
               </div>
             );
           })}
+          </div>
 
-          <button className="btn btn-accent btn-block" style={{ marginTop: 16 }} onClick={goToFotoStep}>
+          <button className="btn btn-accent btn-block" style={{ marginTop: 24 }} onClick={goToFotoStep}>
             Lanjut: Ambil Foto →
           </button>
         </>
@@ -172,9 +175,9 @@ export default function AjukanPeminjaman() {
             ))}
           </div>
 
-          <div className="checkbox-row card" style={{ marginTop: 14 }}>
-            <input type="checkbox" id="confirm" required />
-            <label htmlFor="confirm" style={{ fontWeight: 500 }}>
+          <div className="card" style={{ marginTop: 14, display: 'flex', alignItems: 'center', gap: 12 }}>
+            <input type="checkbox" id="confirm" required style={{ width: 20, height: 20, margin: 0, flexShrink: 0 }} />
+            <label htmlFor="confirm" style={{ fontWeight: 500, margin: 0, cursor: 'pointer', lineHeight: 1.4 }}>
               Saya menyatakan data di atas sudah benar dan APD sudah saya coba langsung di Ruangan HC.
             </label>
           </div>

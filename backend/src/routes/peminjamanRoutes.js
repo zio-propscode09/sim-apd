@@ -9,6 +9,6 @@ router.get('/detail', requireAuth, peminjamanController.getDetailPeminjaman);
 router.post('/create', requireAuth, requireRole(['mahasiswa']), uploadDisk.any(), peminjamanController.createPeminjaman);
 router.post('/approve', requireAuth, requireRole(['hc', 'hsse']), peminjamanController.approvePeminjaman);
 router.post('/reject', requireAuth, requireRole(['hc', 'hsse']), peminjamanController.rejectPeminjaman);
-router.delete('/delete/:id', requireAuth, requireRole(['hc', 'hsse']), peminjamanController.deletePeminjaman);
+router.delete('/delete/:id', requireAuth, requireRole(['hc', 'hsse', 'mahasiswa']), peminjamanController.deletePeminjaman);
 
 module.exports = router;

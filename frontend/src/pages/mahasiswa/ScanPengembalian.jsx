@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MahasiswaLayout from '../../components/MahasiswaLayout';
 import QrScannerBox from '../../components/QrScannerBox';
-import { ButtonSpinner } from '../../components/Loading';
+import { LoadingPage } from '../../components/Loading';
 import { apiErrorMessage } from '../../api/client';
 import api from '../../api/client';
 import { CheckCircle } from 'lucide-react';
@@ -56,8 +56,8 @@ export default function ScanPengembalian() {
       {error && <div className="alert alert-error" style={{ marginBottom: 16 }}>{error}</div>}
         
       {processing ? (
-        <div className="card" style={{ padding: '60px 0', textAlign: 'center' }}>
-          <ButtonSpinner /> <div style={{ marginTop: 12, fontWeight: 500 }}>Memproses Pengembalian...</div>
+        <div className="card">
+          <LoadingPage label="Memproses Pengembalian..." />
         </div>
       ) : (
         <QrScannerBox onResult={handleScanResult} />

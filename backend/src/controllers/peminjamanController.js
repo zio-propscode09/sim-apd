@@ -221,6 +221,15 @@ const deletePeminjaman = async (req, res) => {
     const [peminjaman] = await connection.query('SELECT * FROM peminjaman WHERE id = ?', [id]);
     if (peminjaman.length === 0) throw new Error('Data tidak ditemukan.');
 
+    if (req.user.role === 'mahasiswa') {
+      if (peminjaman[0].mahasiswa_id !== req.user.id) {
+        throw new Error('Anda tidak memiliki akses untuk menghapus data ini.');
+      }
+      if (peminjaman[0].status === 'disetujui') {
+        throw new Error('Tidak dapat menghapus riwayat APD yang sedang dipinjam.');
+      }
+    }
+
     await connection.query('DELETE FROM peminjaman_detail WHERE peminjaman_id = ?', [id]);
     await connection.query('DELETE FROM peminjaman WHERE id = ?', [id]);
 
