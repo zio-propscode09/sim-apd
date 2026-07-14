@@ -9,7 +9,7 @@ export const createPeminjaman = (tglRencanaKembali, items, fotos) => {
   formData.append('tgl_rencana_kembali', tglRencanaKembali || '');
   formData.append('items', JSON.stringify(items));
   fotos.forEach((file, idx) => {
-    if (file) formData.append(`foto_${idx}`, file);
+    if (file) formData.append(`foto_${items[idx].apd_stok_id}`, file);
   });
   return client
     .post('/api/peminjaman/create', formData, {

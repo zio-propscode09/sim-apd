@@ -9,7 +9,7 @@ export const createPengembalian = (peminjamanId, items, fotos) => {
   formData.append('peminjaman_id', peminjamanId);
   formData.append('items', JSON.stringify(items));
   fotos.forEach((file, idx) => {
-    if (file) formData.append(`foto_${idx}`, file);
+    if (file) formData.append(`foto_${items[idx].peminjaman_detail_id}`, file);
   });
   return client
     .post('/api/pengembalian/create', formData, {
