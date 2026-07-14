@@ -34,7 +34,7 @@ app.get('/', (req, res) => {
 // Global error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ success: false, message: 'Terjadi kesalahan pada server.' });
+  res.status(500).json({ success: false, message: 'Terjadi kesalahan pada server.', error: err.message, stack: err.stack });
 });
 
 app.listen(port, () => {
