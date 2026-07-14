@@ -1,14 +1,12 @@
 import { useRef, useState } from 'react';
-import { Camera, Image as ImageIcon } from 'lucide-react';
+import { Camera } from 'lucide-react';
 
 /**
- * Input foto dengan dua pilihan murni via Native OS:
- * 1. Ambil dari file/galeri.
- * 2. Ambil langsung menggunakan kamera HP (via capture="environment").
+ * Input foto dengan satu tombol klik.
+ * Di HP, ini akan otomatis memunculkan pop-up opsi: "Kamera" atau "Galeri".
  */
 export default function PhotoCapture({ label, onChange, required }) {
-  const galleryInputRef = useRef(null);
-  const cameraInputRef = useRef(null);
+  const fileInputRef = useRef(null);
   const [preview, setPreview] = useState(null);
 
   function handleFile(e) {
@@ -18,11 +16,11 @@ export default function PhotoCapture({ label, onChange, required }) {
     onChange(file);
   }
 
-  function reset() {
+  function reset(e) {
+    e.stopPropagation();
     setPreview(null);
     onChange(null);
-    if (galleryInputRef.current) galleryInputRef.current.value = '';
-    if (cameraInputRef.current) cameraInputRef.current.value = '';
+    if (fileInputRef.current) fileInputRef.current.value = '';
   }
 
   return (
@@ -31,30 +29,8 @@ export default function PhotoCapture({ label, onChange, required }) {
         {label} {required && <span style={{ color: 'var(--red-600)' }}>*</span>}
       </label>
 
-      {/* Tampilan Biasa (Belum memilih file) */}
-      {!preview && (
-        <div style={{ display: 'flex', gap: 10 }}>
-          <button
-            type="button"
-            className="btn btn-outline"
-            style={{ flex: 1, padding: '10px 8px', fontSize: 13, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
-            onClick={() => galleryInputRef.current?.click()}
-          >
-            <ImageIcon size={16} /> Galeri / File
-          </button>
-          <button
-            type="button"
-            className="btn btn-accent"
-            style={{ flex: 1, padding: '10px 8px', fontSize: 13, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
-            onClick={() => cameraInputRef.current?.click()}
-          >
-            <Camera size={16} /> Kamera
-          </button>
-        </div>
-      )}
-
       {/* Tampilan Preview Foto */}
-      {preview && (
+      {preview ? (
         <div style={{ position: 'relative' }}>
           <img src={preview} alt={label} className="photo-thumb" />
           <button
@@ -66,23 +42,34 @@ export default function PhotoCapture({ label, onChange, required }) {
             Hapus
           </button>
         </div>
+      ) : (
+        /* Container Upload */
+        <div 
+          onClick={() => fileInputRef.current?.click()}
+          style={{
+            border: '2px dashed var(--border-color)',
+            borderRadius: 'var(--radius-md)',
+            padding: '32px 20px',
+            textAlign: 'center',
+            cursor: 'pointer',
+            background: 'var(--bg-color)',
+            transition: 'all 0.2s'
+          }}
+          className="hover-scale"
+        >
+          <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'rgba(212, 175, 55, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary-color)', margin: '0 auto 12px' }}>
+            <Camera size={24} />
+          </div>
+          <h4 style={{ fontSize: 14, fontWeight: 600, color: 'var(--slate-800)', marginBottom: 4 }}>Ketuk untuk Ambil Foto</h4>
+          <p style={{ fontSize: 12, color: 'var(--slate-500)', margin: 0 }}>Otomatis membuka pilihan Kamera / Galeri</p>
+        </div>
       )}
 
-      {/* Input File Tersembunyi untuk Galeri (Bebas pilih dari file manager) */}
+      {/* Input File Tunggal (Otomatis ditangani OS HP) */}
       <input
-        ref={galleryInputRef}
+        ref={fileInputRef}
         type="file"
         accept="image/*"
-        style={{ display: 'none' }}
-        onChange={handleFile}
-      />
-      
-      {/* Input File Tersembunyi untuk Kamera (Otomatis Buka Native Camera di HP) */}
-      <input
-        ref={cameraInputRef}
-        type="file"
-        accept="image/*"
-        capture="environment"
         style={{ display: 'none' }}
         onChange={handleFile}
       />
