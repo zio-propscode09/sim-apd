@@ -2,6 +2,9 @@ const { Pool } = require('pg');
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
 // Wrapper to convert MySQL-style '?' placeholders to PostgreSQL '$1, $2'
