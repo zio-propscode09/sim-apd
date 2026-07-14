@@ -1,15 +1,15 @@
 import { useRef, useState } from 'react';
-import { Camera } from 'lucide-react';
+import { Camera, Image as ImageIcon, X } from 'lucide-react';
 
-/**
- * Input foto dengan satu tombol klik.
- * Di HP, ini akan otomatis memunculkan pop-up opsi: "Kamera" atau "Galeri".
- */
 export default function PhotoCapture({ label, onChange, required }) {
-  const fileInputRef = useRef(null);
+  const cameraInputRef = useRef(null);
+  const galleryInputRef = useRef(null);
+  
   const [preview, setPreview] = useState(null);
+  const [showMenu, setShowMenu] = useState(false);
 
   function handleFile(e) {
+    setShowMenu(false);
     const file = e.target.files?.[0];
     if (!file) return;
     setPreview(URL.createObjectURL(file));
@@ -20,7 +20,8 @@ export default function PhotoCapture({ label, onChange, required }) {
     e.stopPropagation();
     setPreview(null);
     onChange(null);
-    if (fileInputRef.current) fileInputRef.current.value = '';
+    if (cameraInputRef.current) cameraInputRef.current.value = '';
+    if (galleryInputRef.current) galleryInputRef.current.value = '';
   }
 
   return (
@@ -45,7 +46,7 @@ export default function PhotoCapture({ label, onChange, required }) {
       ) : (
         /* Container Upload */
         <div 
-          onClick={() => fileInputRef.current?.click()}
+          onClick={() => setShowMenu(true)}
           style={{
             border: '2px dashed var(--border-color)',
             borderRadius: 'var(--radius-md)',
@@ -61,13 +62,57 @@ export default function PhotoCapture({ label, onChange, required }) {
             <Camera size={24} />
           </div>
           <h4 style={{ fontSize: 14, fontWeight: 600, color: 'var(--slate-800)', marginBottom: 4 }}>Ketuk untuk Ambil Foto</h4>
-          <p style={{ fontSize: 12, color: 'var(--slate-500)', margin: 0 }}>Otomatis membuka pilihan Kamera / Galeri</p>
+          <p style={{ fontSize: 12, color: 'var(--slate-500)', margin: 0 }}>Pilih Kamera atau Galeri</p>
         </div>
       )}
 
-      {/* Input File Tunggal (Otomatis ditangani OS HP) */}
+      {/* Pop-up Menu Pilihan (Action Sheet) */}
+      {showMenu && !preview && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, 
+          background: 'rgba(0,0,0,0.5)', zIndex: 9999,
+          display: 'flex', alignItems: 'flex-end', justifyContent: 'center'
+        }} onClick={() => setShowMenu(false)}>
+          <div style={{
+            background: 'white', width: '100%', maxWidth: 480,
+            borderTopLeftRadius: 20, borderTopRightRadius: 20,
+            padding: '24px 20px', animation: 'slideUp 0.3s ease-out'
+          }} onClick={(e) => e.stopPropagation()}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+              <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: 'var(--slate-800)' }}>Pilih Sumber Foto</h3>
+              <button className="icon-btn" onClick={() => setShowMenu(false)}><X size={20} /></button>
+            </div>
+            
+            <button 
+              className="btn btn-accent btn-block" 
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, marginBottom: 12, padding: '16px' }}
+              onClick={() => cameraInputRef.current?.click()}
+            >
+              <Camera size={20} /> Buka Kamera Langsung
+            </button>
+            
+            <button 
+              className="btn btn-outline btn-block" 
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, padding: '16px' }}
+              onClick={() => galleryInputRef.current?.click()}
+            >
+              <ImageIcon size={20} /> Pilih dari Galeri / File
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Input File Tersembunyi */}
       <input
-        ref={fileInputRef}
+        ref={cameraInputRef}
+        type="file"
+        accept="image/*"
+        capture="environment"
+        style={{ display: 'none' }}
+        onChange={handleFile}
+      />
+      <input
+        ref={galleryInputRef}
         type="file"
         accept="image/*"
         style={{ display: 'none' }}

@@ -1,18 +1,18 @@
 import { useRef, useState } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
-import { ScanLine, AlertCircle } from 'lucide-react';
+import { Camera, Image as ImageIcon, ScanLine, AlertCircle, X } from 'lucide-react';
 import { ButtonSpinner } from './Loading';
 
-/**
- * Komponen scan QR Code yang menggunakan Native Camera / Upload File.
- * Alih-alih merender video live, pengguna mengetuk container untuk memilih opsi kamera/galeri.
- */
 export default function QrScannerBox({ onResult }) {
-  const fileInputRef = useRef(null);
+  const cameraInputRef = useRef(null);
+  const galleryInputRef = useRef(null);
+  
   const [error, setError] = useState('');
   const [isScanning, setIsScanning] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
   async function handleFileSelected(e) {
+    setShowMenu(false);
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -36,7 +36,6 @@ export default function QrScannerBox({ onResult }) {
 
   return (
     <div style={{ textAlign: 'center' }}>
-      
       <div id="dummy-qr-reader" style={{ display: 'none' }}></div>
 
       {error && (
@@ -52,7 +51,7 @@ export default function QrScannerBox({ onResult }) {
         </div>
       ) : (
         <div 
-          onClick={() => fileInputRef.current?.click()}
+          onClick={() => setShowMenu(true)}
           style={{ 
             padding: '40px 20px', 
             background: 'var(--card-bg)', 
@@ -73,14 +72,58 @@ export default function QrScannerBox({ onResult }) {
           </div>
           <div>
             <h3 style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-main)', marginBottom: 4 }}>Ketuk untuk Scan QR</h3>
-            <p style={{ fontSize: 13, color: 'var(--slate-500)', margin: 0 }}>Otomatis membuka pilihan Kamera / Galeri</p>
+            <p style={{ fontSize: 13, color: 'var(--slate-500)', margin: 0 }}>Pilih Kamera atau Galeri</p>
           </div>
         </div>
       )}
 
-      {/* Input File Tunggal (Otomatis memunculkan popup Kamera / File di HP) */}
+      {/* Pop-up Menu Pilihan (Action Sheet) */}
+      {showMenu && !isScanning && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, 
+          background: 'rgba(0,0,0,0.5)', zIndex: 9999,
+          display: 'flex', alignItems: 'flex-end', justifyContent: 'center'
+        }} onClick={() => setShowMenu(false)}>
+          <div style={{
+            background: 'white', width: '100%', maxWidth: 480,
+            borderTopLeftRadius: 20, borderTopRightRadius: 20,
+            padding: '24px 20px'
+          }} onClick={(e) => e.stopPropagation()}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+              <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: 'var(--slate-800)' }}>Metode Scan QR</h3>
+              <button className="icon-btn" onClick={() => setShowMenu(false)}><X size={20} /></button>
+            </div>
+            
+            <button 
+              className="btn btn-accent btn-block" 
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, marginBottom: 12, padding: '16px' }}
+              onClick={() => cameraInputRef.current?.click()}
+            >
+              <Camera size={20} /> Buka Kamera Langsung
+            </button>
+            
+            <button 
+              className="btn btn-outline btn-block" 
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, padding: '16px' }}
+              onClick={() => galleryInputRef.current?.click()}
+            >
+              <ImageIcon size={20} /> Pilih dari Galeri / File
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Input File Tersembunyi */}
       <input
-        ref={fileInputRef}
+        ref={cameraInputRef}
+        type="file"
+        accept="image/*"
+        capture="environment"
+        style={{ display: 'none' }}
+        onChange={handleFileSelected}
+      />
+      <input
+        ref={galleryInputRef}
         type="file"
         accept="image/*"
         style={{ display: 'none' }}

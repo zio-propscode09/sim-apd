@@ -72,7 +72,7 @@ export default function AjukanPengembalian() {
           <p style={{ fontSize: 13, color: 'var(--slate-500)', marginBottom: 16 }}>
             Staf HC akan memeriksa pengajuan Anda. Jika sudah disetujui, Staf HC akan menampilkan QR Code di layar komputer mereka.
           </p>
-          <button className="btn btn-primary btn-block" onClick={() => navigate('/m/scan-pengembalian')}>
+          <button className="btn btn-accent btn-block" onClick={() => navigate('/m/scan-pengembalian')}>
             Buka Scanner Kamera
           </button>
           <button className="btn btn-outline btn-block" style={{ marginTop: 10 }} onClick={() => navigate('/m')}>
