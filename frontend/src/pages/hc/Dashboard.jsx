@@ -3,7 +3,7 @@ import Chart from 'chart.js/auto';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import StaffLayout from '../../components/StaffLayout';
-import { LoadingPage } from '../../components/Loading';
+import { SkeletonDashboard } from '../../components/Loading';
 import { getHcSummary, getStatusPeminjaman, getPenggunaanApd } from '../../api/dashboard';
 import ChartContainer from '../../components/charts/ChartContainer';
 
@@ -35,7 +35,7 @@ export default function HcDashboard() {
   }, []);
 
   if (!summary && !statusData && !usageData && !error) {
-    return <StaffLayout title="Dashboard HC"><LoadingPage /></StaffLayout>;
+    return <StaffLayout title="Dashboard HC"><SkeletonDashboard /></StaffLayout>;
   }
 
   const barOpts = { 

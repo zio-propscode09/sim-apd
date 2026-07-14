@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import MahasiswaLayout from '../../components/MahasiswaLayout';
+import { SkeletonCardList } from '../../components/Loading';
 import StatusBadge from '../../components/StatusBadge';
-import { LoadingPage } from '../../components/Loading';
 import { listPeminjaman } from '../../api/peminjaman';
 import { useAuth } from '../../context/AuthContext';
 import { assetUrl } from '../../api/client';
@@ -30,7 +30,7 @@ export default function MahasiswaDashboard() {
       .catch(() => setError('Gagal memuat data peminjaman.'));
   }, []);
 
-  if (list === null && !error) return <MahasiswaLayout title="Beranda"><LoadingPage /></MahasiswaLayout>;
+  if (list === null && !error) return <MahasiswaLayout title="Beranda"><SkeletonCardList count={3} /></MahasiswaLayout>;
 
   const active = list?.find((p) => ['menunggu_verifikasi', 'disetujui'].includes(p.status));
   const firstName = user?.nama?.split(' ')[0] || '';

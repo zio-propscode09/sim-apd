@@ -5,7 +5,7 @@ import StaffLayout from '../../components/StaffLayout';
 import CustomSelect from '../../components/CustomSelect';
 import StatusBadge from '../../components/StatusBadge';
 import EmptyState from '../../components/EmptyState';
-import { LoadingPage } from '../../components/Loading';
+import { SkeletonTable } from '../../components/Loading';
 import { listMahasiswa, updateStatusMahasiswa } from '../../api/mahasiswa';
 import { exportToExcel, exportToPdf } from '../../utils/exportHelper';
 
@@ -149,7 +149,8 @@ export default function DataMahasiswa() {
       </div>
 
       {error && <div className="alert alert-error">{error}</div>}
-      {!list && !error && <LoadingPage />}
+      {!list && !error && <SkeletonTable rows={10} />}
+      
       {list && filteredList.length === 0 && <EmptyState icon="🧑‍🎓" title="Belum ada data mahasiswa yang cocok" />}
 
       {list && filteredList.length > 0 && (

@@ -3,7 +3,7 @@ import StaffLayout from '../../components/StaffLayout';
 import EmptyState from '../../components/EmptyState';
 import ConfirmModal from '../../components/ConfirmModal';
 import Toast from '../../components/Toast';
-import { LoadingPage, ButtonSpinner } from '../../components/Loading';
+import { SkeletonTable, ButtonSpinner } from '../../components/Loading';
 import { listPeminjaman, deletePeminjaman } from '../../api/peminjaman';
 import { listPengembalian, approvePengembalian, deletePengembalian, confirmScanPengembalian } from '../../api/pengembalian';
 import { Link } from 'react-router-dom';
@@ -83,7 +83,6 @@ export default function PeminjamanPengembalian() {
     }
   }
 
-  // Menentukan pesan untuk ConfirmModal berdasarkan tipenya
   const getConfirmDetails = () => {
     if (confirmState.type === 'approve_pengembalian') {
       return {
@@ -164,8 +163,8 @@ export default function PeminjamanPengembalian() {
       </div>
 
       {activeTab === 'peminjaman' && (
-        <div className="tab-content">
-          {!peminjamanList && <LoadingPage label="Memuat..." />}
+        <div className="card">
+          {!peminjamanList && <SkeletonTable rows={5} />}
           {peminjamanList && peminjamanList.length === 0 ? (
             <div className="card" style={{ padding: '60px 20px', textAlign: 'center' }}>
               <EmptyState icon={<Inbox size={48} strokeWidth={1.5} color="var(--slate-400)" />} title="Tidak ada pengajuan peminjaman baru" />
@@ -240,8 +239,8 @@ export default function PeminjamanPengembalian() {
       )}
 
       {activeTab === 'pengembalian' && (
-        <div className="tab-content">
-          {!pengembalianList && <LoadingPage label="Memuat..." />}
+        <div className="card">
+          {!pengembalianList && <SkeletonTable rows={5} />}
           {pengembalianList && pengembalianList.length === 0 ? (
             <div className="card" style={{ padding: '60px 20px', textAlign: 'center' }}>
               <EmptyState icon={<PackageOpen size={48} strokeWidth={1.5} color="var(--slate-400)" />} title="Tidak ada pengajuan pengembalian baru" />

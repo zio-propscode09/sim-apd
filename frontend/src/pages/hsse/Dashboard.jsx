@@ -3,7 +3,7 @@ import Chart from 'chart.js/auto';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import StaffLayout from '../../components/StaffLayout';
-import { LoadingPage } from '../../components/Loading';
+import { SkeletonDashboard } from '../../components/Loading';
 import Toast from '../../components/Toast';
 import { getHsseSummary, getKepatuhanApd } from '../../api/dashboard';
 import { listApd } from '../../api/apd';
@@ -40,7 +40,7 @@ export default function HsseDashboard() {
   }, []);
 
   if (!summary && !complianceData && !error) {
-    return <StaffLayout title="Dashboard HSSE"><LoadingPage /></StaffLayout>;
+    return <StaffLayout title="Dashboard HSSE"><SkeletonDashboard /></StaffLayout>;
   }
 
   const complianceChart = complianceData && {

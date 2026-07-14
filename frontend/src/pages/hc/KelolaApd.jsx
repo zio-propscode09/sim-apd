@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { FileSpreadsheet, FileText, Plus, X } from 'lucide-react';
 import StaffLayout from '../../components/StaffLayout';
-import { LoadingPage, ButtonSpinner } from '../../components/Loading';
+import EmptyState from '../../components/EmptyState';
+import { SkeletonTable, ButtonSpinner } from '../../components/Loading';
 import ConfirmModal from '../../components/ConfirmModal';
 import { listApd, createJenisApd, createStokApd, updateStokApd, nonaktifkanStokApd } from '../../api/apd';
 import { apiErrorMessage } from '../../api/client';
@@ -138,7 +139,7 @@ export default function KelolaApd() {
     exportToPdf('Laporan Akhir Inventoris APD', headers, data, 'Laporan_Inventoris_APD');
   }
 
-  if (!apdList && !error) return <StaffLayout title="Kelola APD"><LoadingPage /></StaffLayout>;
+  if (!apdList && !error) return <StaffLayout title="Kelola APD"><SkeletonTable rows={8} /></StaffLayout>;
 
   return (
     <StaffLayout title="Kelola APD" subtitle="Master jenis APD & stok per ukuran">
