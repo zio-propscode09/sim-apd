@@ -70,7 +70,7 @@ export default function PermintaanApdHsse() {
         title="Setujui Distribusi APD"
         message="Setujui dan distribusikan APD ini? Stok di HC akan otomatis bertambah sesuai jumlah yang diminta."
         confirmText="Ya, Distribusikan"
-        variant="primary"
+        variant="success"
         isLoading={processingId === confirmApprove.id}
         onConfirm={executeApprove}
         onCancel={() => setConfirmApprove({ open: false, id: null })}

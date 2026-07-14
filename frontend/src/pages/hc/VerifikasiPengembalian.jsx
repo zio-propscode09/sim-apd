@@ -64,7 +64,7 @@ export default function VerifikasiPengembalian() {
         title="Setujui Pengembalian"
         message="Setujui pengembalian ini? Stok APD akan otomatis diperbarui sesuai item yang dikembalikan."
         confirmText="Ya, Setujui"
-        variant="primary"
+        variant="success"
         isLoading={processing}
         onConfirm={executeApprove}
         onCancel={() => setConfirmApprove(false)}

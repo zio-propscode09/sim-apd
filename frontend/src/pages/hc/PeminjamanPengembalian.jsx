@@ -84,28 +84,32 @@ export default function PeminjamanPengembalian() {
   }
 
   const getConfirmDetails = () => {
-    if (confirmState.type === 'approve_pengembalian') {
-      return {
+    return {
+      approve_pengembalian: {
         title: "Konfirmasi Pengembalian",
         message: "Setujui pengembalian ini dan generate QR Code sekarang?",
         confirmText: "Ya, Setujui",
-        variant: "primary"
-      };
-    }
-    if (confirmState.type === 'manual_backdoor') {
-      return {
+        variant: "success"
+      },
+      manual_backdoor: {
         title: "Konfirmasi Manual (Backdoor)",
         message: "Anda akan mengkonfirmasi pengembalian ini secara manual tanpa melalui proses scan QR oleh mahasiswa. Pastikan barang APD sudah benar-benar diterima kembali.",
         confirmText: "Ya, Konfirmasi Manual",
         variant: "danger"
-      };
-    }
-    return {
-      title: "Hapus Riwayat",
-      message: `Apakah Anda yakin ingin menghapus pengajuan ${confirmState.type} ini secara permanen? Tindakan ini tidak dapat dibatalkan.`,
-      confirmText: "Ya, Hapus",
-      variant: "danger"
-    };
+      },
+      peminjaman: {
+        title: "Hapus Riwayat",
+        message: "Apakah Anda yakin ingin menghapus pengajuan peminjaman ini secara permanen? Tindakan ini tidak dapat dibatalkan.",
+        confirmText: "Ya, Hapus",
+        variant: "danger"
+      },
+      pengembalian: {
+        title: "Hapus Riwayat",
+        message: "Apakah Anda yakin ingin menghapus pengajuan pengembalian ini secara permanen? Tindakan ini tidak dapat dibatalkan.",
+        confirmText: "Ya, Hapus",
+        variant: "danger"
+      }
+    }[confirmState.type] || { title: 'Konfirmasi', message: '', confirmText: 'Ya', variant: 'primary' };
   };
 
   const confirmDetails = getConfirmDetails();

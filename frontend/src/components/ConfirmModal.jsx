@@ -13,10 +13,24 @@ export default function ConfirmModal({
   if (!isOpen) return null;
 
   const isDanger = variant === 'danger';
-  const iconBg = isDanger ? 'var(--red-100)' : '#fefce8';
-  const iconColor = isDanger ? 'var(--red-600)' : 'var(--primary-color)';
-  const btnBg = isDanger ? 'var(--red-600)' : 'var(--primary-color)';
-  const btnHover = isDanger ? '#b91c1c' : 'var(--primary-hover)';
+  const isSuccess = variant === 'success';
+
+  let iconBg = '#fefce8';
+  let iconColor = 'var(--primary-color)';
+  let btnBg = 'var(--primary-color)';
+  let btnHover = 'var(--primary-hover)';
+
+  if (isDanger) {
+    iconBg = 'var(--red-100)';
+    iconColor = 'var(--red-600)';
+    btnBg = 'var(--red-600)';
+    btnHover = '#b91c1c';
+  } else if (isSuccess) {
+    iconBg = '#dcfce7';
+    iconColor = '#16a34a';
+    btnBg = '#16a34a';
+    btnHover = '#15803d';
+  }
 
   return (
     <div style={{

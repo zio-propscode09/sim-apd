@@ -72,7 +72,7 @@ export default function VerifikasiPeminjamanDetail() {
         title="Setujui Peminjaman"
         message="Setujui peminjaman ini? Stok APD akan otomatis berkurang sesuai jumlah yang dipinjam."
         confirmText="Ya, Setujui"
-        variant="primary"
+        variant="success"
         isLoading={processing}
         onConfirm={executeApprove}
         onCancel={() => setConfirmApprove(false)}
@@ -147,7 +147,7 @@ export default function VerifikasiPeminjamanDetail() {
           )}
 
           {data.status !== 'menunggu_verifikasi' && (
-            <button className="btn btn-outline btn-block" onClick={() => navigate('/hc/verifikasi-peminjaman')}>
+            <button className="btn btn-outline btn-block" style={{ marginTop: 24 }} onClick={() => navigate('/hc/peminjaman-pengembalian')}>
               Kembali ke Daftar
             </button>
           )}
