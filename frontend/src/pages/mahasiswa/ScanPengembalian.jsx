@@ -12,13 +12,11 @@ export default function ScanPengembalian() {
   const [error, setError] = useState('');
   const [processing, setProcessing] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [isScanning, setIsScanning] = useState(false);
 
   async function handleScanResult(token) {
     if (processing || success) return;
     setError('');
     setProcessing(true);
-    setIsScanning(false);
     try {
       await api.post('/api/pengembalian/confirm-scan', { token });
       setSuccess(true);
@@ -39,7 +37,7 @@ export default function ScanPengembalian() {
           <p style={{ fontSize: 14, color: 'var(--slate-500)', marginBottom: 24, lineHeight: 1.5 }}>
             Terima kasih telah mengembalikan APD. Status peminjaman Anda sekarang telah selesai.
           </p>
-          <button className="btn btn-primary btn-block" onClick={() => navigate('/m')}>
+          <button className="btn btn-accent btn-block" onClick={() => navigate('/m')}>
             Kembali ke Beranda
           </button>
         </div>
@@ -48,48 +46,22 @@ export default function ScanPengembalian() {
   }
 
   return (
-    <MahasiswaLayout title="Scan QR HC" subtitle="Arahkan kamera ke layar komputer HC">
-      <div className="card" style={{ textAlign: 'center' }}>
-        <p style={{ fontSize: 14, color: 'var(--slate-600)', marginBottom: 16 }}>
+    <MahasiswaLayout title="Konfirmasi Pengembalian" subtitle="Serahkan APD ke Staff HC">
+      <div style={{ textAlign: 'center', marginBottom: 16 }}>
+        <p style={{ fontSize: 14, color: 'var(--slate-600)' }}>
           Pastikan Staf HC sudah menekan tombol konfirmasi dan layar mereka memunculkan QR Code pengembalian.
         </p>
-        
-        {error && <div className="alert alert-error" style={{ marginBottom: 16 }}>{error}</div>}
-        
-        {processing ? (
-          <div style={{ padding: '40px 0' }}>
-            <ButtonSpinner /> <span style={{ marginLeft: 8 }}>Memproses Pengembalian...</span>
-          </div>
-        ) : isScanning ? (
-          <QrScannerBox onResult={handleScanResult} />
-        ) : (
-          <div 
-            style={{ 
-              padding: '60px 20px', 
-              background: 'var(--bg-color)', 
-              borderRadius: 16, 
-              border: '2px dashed var(--border-color)',
-              cursor: 'pointer',
-              transition: 'all 0.2s',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 16
-            }}
-            onClick={() => setIsScanning(true)}
-            className="hover-scale"
-          >
-            <div style={{ width: 80, height: 80, borderRadius: '50%', background: 'rgba(212, 175, 55, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary-color)' }}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
-            </div>
-            <div>
-              <h3 style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-main)', marginBottom: 4 }}>Ketuk untuk Memulai Scanner</h3>
-              <p style={{ fontSize: 13, color: 'var(--slate-500)', margin: 0 }}>Kamera akan aktif setelah tombol ini ditekan</p>
-            </div>
-          </div>
-        )}
       </div>
+        
+      {error && <div className="alert alert-error" style={{ marginBottom: 16 }}>{error}</div>}
+        
+      {processing ? (
+        <div className="card" style={{ padding: '60px 0', textAlign: 'center' }}>
+          <ButtonSpinner /> <div style={{ marginTop: 12, fontWeight: 500 }}>Memproses Pengembalian...</div>
+        </div>
+      ) : (
+        <QrScannerBox onResult={handleScanResult} />
+      )}
     </MahasiswaLayout>
   );
 }

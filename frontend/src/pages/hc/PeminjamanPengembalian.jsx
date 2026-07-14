@@ -166,9 +166,7 @@ export default function PeminjamanPengembalian() {
         <div className="card">
           {!peminjamanList && <SkeletonTable rows={5} />}
           {peminjamanList && peminjamanList.length === 0 ? (
-            <div className="card" style={{ padding: '60px 20px', textAlign: 'center' }}>
-              <EmptyState icon={<Inbox size={48} strokeWidth={1.5} color="var(--slate-400)" />} title="Tidak ada pengajuan peminjaman baru" />
-            </div>
+            <EmptyState icon={<Inbox size={48} strokeWidth={1.5} color="#94a3b8" />} title="Tidak ada pengajuan peminjaman baru" />
           ) : peminjamanList && (
           <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
             <div className="table-responsive">
@@ -242,9 +240,7 @@ export default function PeminjamanPengembalian() {
         <div className="card">
           {!pengembalianList && <SkeletonTable rows={5} />}
           {pengembalianList && pengembalianList.length === 0 ? (
-            <div className="card" style={{ padding: '60px 20px', textAlign: 'center' }}>
-              <EmptyState icon={<PackageOpen size={48} strokeWidth={1.5} color="var(--slate-400)" />} title="Tidak ada pengajuan pengembalian baru" />
-            </div>
+            <EmptyState icon={<PackageOpen size={48} strokeWidth={1.5} color="#94a3b8" />} title="Tidak ada pengajuan pengembalian baru" />
           ) : pengembalianList && (
           <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
             <div className="table-responsive">

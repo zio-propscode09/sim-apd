@@ -78,7 +78,7 @@ export default function PermintaanApdHsse() {
 
       {error && <div className="alert alert-error">{error}</div>}
       {!list && !error && <LoadingPage />}
-      {list && list.length === 0 && <EmptyState icon={<Package size={40} strokeWidth={1.5} color="var(--slate-400)" />} title="Belum ada permintaan APD" />}
+      {list && list.length === 0 && <EmptyState icon={<Package size={40} strokeWidth={1.5} color="#94a3b8" />} title="Belum ada permintaan APD" />}
 
       {list?.map((r) => (
         <div className="card" key={r.id}>
