@@ -5,10 +5,8 @@ import axios from 'axios';
  * Contoh default: project diletakkan di htdocs/sim-apd, sehingga backend dapat
  * diakses di http://localhost/sim-apd/backend
  */
-export const BASE_URL = 'http://localhost:5000';
-
-// Host saja (tanpa path), dipakai untuk menyusun URL foto yang dikembalikan backend
-export const HOST_URL = 'http://localhost:5000';
+export const HOST_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+export const BASE_URL = HOST_URL;
 
 export function assetUrl(path) {
   if (!path) return null;
