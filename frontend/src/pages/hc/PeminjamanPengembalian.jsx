@@ -286,9 +286,8 @@ export default function PeminjamanPengembalian() {
                             className="btn btn-primary" 
                             style={{ padding: '6px 16px', fontSize: 13 }}
                             onClick={() => handleApprovePengembalian(p.id)}
-                            disabled={confirmState.loading && confirmState.id === p.id}
                           >
-                            {confirmState.loading && confirmState.id === p.id ? <ButtonSpinner /> : 'Konfirmasi & Buat QR'}
+                            Konfirmasi & Buat QR
                           </button>
                           <button 
                             onClick={() => handleDeletePengembalian(p.id)}

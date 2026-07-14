@@ -124,11 +124,11 @@ export default function PermintaanApdHsse() {
               </div>
             ) : (
               <div style={{ display: 'flex', gap: 10, marginTop: 12 }}>
-                <button className="btn btn-outline" style={{ flex: 1 }} onClick={() => setRejectingId(r.id)} disabled={processingId === r.id}>
+                <button className="btn btn-outline" style={{ flex: 1 }} onClick={() => setRejectingId(r.id)}>
                   Tolak
                 </button>
-                <button className="btn btn-success" style={{ flex: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }} onClick={() => setConfirmApprove({ open: true, id: r.id })} disabled={processingId === r.id}>
-                  {processingId === r.id ? <ButtonSpinner /> : <><Check size={16} /> Setujui & Distribusikan</>}
+                <button className="btn btn-success" style={{ flex: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }} onClick={() => setConfirmApprove({ open: true, id: r.id })}>
+                  <Check size={16} /> Setujui & Distribusikan
                 </button>
               </div>
             )

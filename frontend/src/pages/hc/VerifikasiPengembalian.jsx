@@ -135,11 +135,11 @@ export default function VerifikasiPengembalian() {
 
           {result.pengembalian.status === 'menunggu_verifikasi' ? (
             <div style={{ display: 'flex', gap: 10 }}>
-              <button className="btn btn-outline" style={{ flex: 1 }} onClick={() => setResult(null)} disabled={processing}>
+              <button className="btn btn-outline" style={{ flex: 1 }} onClick={() => setResult(null)}>
                 Batal
               </button>
-              <button className="btn btn-success" style={{ flex: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }} onClick={() => setConfirmApprove(true)} disabled={processing}>
-                {processing ? <ButtonSpinner /> : <><Check size={16} /> Setujui Pengembalian</>}
+              <button className="btn btn-success" style={{ flex: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }} onClick={() => setConfirmApprove(true)}>
+                <Check size={16} /> Setujui Pengembalian
               </button>
             </div>
           ) : (

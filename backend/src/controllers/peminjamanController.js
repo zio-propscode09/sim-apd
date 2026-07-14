@@ -230,6 +230,14 @@ const deletePeminjaman = async (req, res) => {
       }
     }
 
+    // Hapus data pengembalian terkait (jika ada) untuk menghindari foreign key constraint error
+    const [pengembalianList] = await connection.query('SELECT id FROM pengembalian WHERE peminjaman_id = ?', [id]);
+    if (pengembalianList.length > 0) {
+      const pengembalianIds = pengembalianList.map(p => p.id);
+      await connection.query('DELETE FROM pengembalian_detail WHERE pengembalian_id IN (?)', [pengembalianIds]);
+      await connection.query('DELETE FROM pengembalian WHERE peminjaman_id = ?', [id]);
+    }
+
     await connection.query('DELETE FROM peminjaman_detail WHERE peminjaman_id = ?', [id]);
     await connection.query('DELETE FROM peminjaman WHERE id = ?', [id]);
 

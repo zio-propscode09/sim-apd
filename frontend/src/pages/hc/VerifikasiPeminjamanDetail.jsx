@@ -120,11 +120,11 @@ export default function VerifikasiPeminjamanDetail() {
 
               {!showReject ? (
                 <div style={{ display: 'flex', gap: 10 }}>
-                  <button className="btn btn-outline" style={{ flex: 1 }} onClick={() => setShowReject(true)} disabled={processing}>
+                  <button className="btn btn-outline" style={{ flex: 1 }} onClick={() => setShowReject(true)}>
                     Tolak
                   </button>
-                  <button className="btn btn-success" style={{ flex: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }} onClick={() => setConfirmApprove(true)} disabled={processing}>
-                    {processing ? <ButtonSpinner /> : <><Check size={16} /> Setujui Peminjaman</>}
+                  <button className="btn btn-success" style={{ flex: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }} onClick={() => setConfirmApprove(true)}>
+                    <Check size={16} /> Setujui Peminjaman
                   </button>
                 </div>
               ) : (
@@ -134,7 +134,7 @@ export default function VerifikasiPeminjamanDetail() {
                     <textarea className="input" rows={2} value={alasan} onChange={(e) => setAlasan(e.target.value)} />
                   </div>
                   <div style={{ display: 'flex', gap: 10 }}>
-                    <button className="btn btn-outline" style={{ flex: 1 }} onClick={() => setShowReject(false)} disabled={processing}>
+                    <button className="btn btn-outline" style={{ flex: 1 }} onClick={() => setShowReject(false)}>
                       Batal
                     </button>
                     <button className="btn btn-danger" style={{ flex: 2 }} onClick={handleReject} disabled={processing}>
